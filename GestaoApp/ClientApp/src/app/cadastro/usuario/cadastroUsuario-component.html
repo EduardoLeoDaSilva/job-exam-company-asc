@@ -1,0 +1,69 @@
+<form class="form-login">
+  <div class="text-center mb-4">
+    <img class="mb-4" src="../../assets/imagens/download.png" width="72" height="72" />
+    <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+  </div>
+
+
+  <div class="form-label-group">
+    <input type="text" [(ngModel)]="usuario.nome" id="nome" name="nome" class="form-control mb-1" placeholder="Informe o seu Nome" #nome="ngModel" minlength="4" required [ngClass]="{
+           'is-valid': nome.valid && (nome.dirty || nome.touched),
+           'is-invalid': nome.invalid && (nome.dirty || nome.touched)
+           }" />
+    <label for="nome" class="sr-only">Nome</label>
+  </div>
+
+  <div *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+    <div class="invalid-feedback mb-2 visivel" *ngIf="nome.errors?.required && (nome.dirty || nome.touched)">
+      O nome é obrigatório
+    </div>
+
+    <div class="invalid-feedback mb-2 visivel" *ngIf="nome.errors?.minlength && (nome.dirty || nome.touched)">
+      O nome precisa ter no mínimo 4 caracteres.
+    </div>
+  </div>
+
+
+  <div class="form-label-group">
+    <input type="email" [(ngModel)]="usuario.email" id="email" name="email" class="form-control mb-1" placeholder="Informe o e-mail" #email="ngModel" required email [ngClass]="{
+           'is-valid': email.valid && (email.dirty || email.touched),
+           'is-invalid': email.invalid && (email.dirty || email.touched)
+           }" />
+    <label for="email" class="sr-only">Email</label>
+  </div>
+
+  <div class="invalid-feedback mb-2 visivel" *ngIf="email.invalid && (email.dirty || email.touched) ">
+    O email é inválido
+  </div>
+
+  <div class="form-label-group">
+    <input [(ngModel)]="usuario.senha" id="senha" name="senha" class="form-control mb-1" #senha="ngModel" type="password" placeholder="Informe a senha" minlength="4" required [ngClass]="{
+           'is-valid': senha.valid &&(senha.dirty || senha.touched),
+           'is-invalid': senha.invalid &&(senha.dirty || senha.touched)
+           }" />
+    <label for="senha" class="sr-only">Senha</label>
+  </div>
+  <div *ngIf="senha.invalid &&(senha.dirty || senha.touched)">
+    <div class="invalid-feedback mb-2 visivel" *ngIf="senha.errors?.required">
+      A senha é Obrigatória
+    </div>
+    <div class="invalid-feedback mb-2 visivel" *ngIf="senha.errors?.minlength">
+      A tem que ter no mínimo 4 caracteres
+    </div>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block mb-3" disabled *ngIf="!((email.valid && (email.dirty || email.touched)) &&(nome.valid && (nome.dirty || nome.touched)) && (senha.valid &&(senha.dirty || senha.touched))) " type="submit">Cadastrar</button>
+  <button class="btn btn-lg btn-primary btn-block mb-3" (click)="cadastrar()" *ngIf="(email.valid && (email.dirty || email.touched)) &&(nome.valid && (nome.dirty || nome.touched)) && (senha.valid &&(senha.dirty || senha.touched))" type="submit">
+    <div class="spinner-border text-success float-left" role="status" *ngIf="spinnerAtivo">
+      <span class="sr-only">Loading...</span>
+    </div>Cadastrar
+  </button>
+
+  <div class="alert alert-success" role="alert" *ngIf="msgSucesso">
+    {{msgSucesso}}
+  </div>
+
+  <div class="alert alert-danger" role="alert" *ngIf="msgFalha">
+    {{msgFalha}}
+  </div>
+</form>
+

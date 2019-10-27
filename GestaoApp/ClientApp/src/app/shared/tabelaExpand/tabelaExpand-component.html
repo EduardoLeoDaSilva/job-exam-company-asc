@@ -1,0 +1,71 @@
+<div class="accordion" id="tabelaExpand">
+  <div class="card" *ngFor="let item of dadosTabela">
+    <div class="card-header" [id]="item.AlunoId">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" (click)="expandir(teste)">
+
+          {{item.Nome}} - {{item.TurmaId}}
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse" #teste>
+      <div class="card-body">
+        <div class="card" *ngFor="let alunoResponse of item.Alunos">
+          <div class="card-header">
+            <h2 class="mb-0">
+              <button class="btn btn-link" type="button" (click)="expandir(aluno)">
+                {{alunoResponse.Nome}}
+              </button>
+            </h2>
+          </div>
+          <div id="collapseAluno" class="collapse" #aluno>
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Matéria</th>
+                    <th scope="col">Nota Prova 1</th>
+                    <th scope="col">Peso p1</th>
+                    <th scope="col">Nota Prova 2 </th>
+                    <th scope="col">Peso p2</th>
+                    <th scope="col">Nota Prova 3</th>
+                    <th scope="col">Peso p3</th>
+                    <th scope="col">Nota Prova Final</th>
+                    <th scope="col">Média</th>
+                    <th scope="col">Aprovado na Matéria</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let resultado of alunoResponse.Resultados">
+                    <td>{{resultado.Materia.Nome}}</td>
+                    <td> {{resultado.Provas[0].Nota}}</td>
+                    <td>{{resultado.Materia.Peso1}}</td>
+                    <td> {{resultado.Provas[1].Nota}}</td>
+                    <td>{{resultado.Materia.Peso2}}</td>
+                    <td> {{resultado.Provas[2].Nota}}</td>
+                    <td>{{resultado.Materia.Peso3}}</td>
+                    <td *ngIf="resultado.Provas.length >3">{{resultado.Provas[3].Nota}}</td>
+                    <td *ngIf="resultado.Provas.length <=3"></td>
+                    <td>{{resultado.NotaFinal}}</td>
+                    <td *ngIf="resultado.Aprovado">Sim</td>
+                    <td *ngIf="!resultado.Aprovado">Não</td>
+                  </tr>
+
+                </tbody>
+              </table>
+              <div class="alert alert-success largo" *ngIf="alunoResponse.AprovadoPeriodo">
+                O Aluno foi Aprovado no período.
+              </div>
+              <div class="alert alert-danger largo" *ngIf="!alunoResponse.AprovadoPeriodo">
+                O Aluno foi reprovado no período.
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

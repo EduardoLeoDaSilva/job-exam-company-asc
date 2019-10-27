@@ -1,0 +1,38 @@
+<form class="form-login">
+  <div class="text-center mb-4">
+    <img class="mb-4" src="../../assets/imagens/download.png" width="72" height="72" />
+    <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+  </div>
+
+  <div class="form-label-group">
+    <input type="email" [(ngModel)]="usuario.email" id="email" name="email" class="form-control mb-1" placeholder="Informe o e-mail" #email="ngModel" required email [ngClass]="{
+           'is-valid': email.valid && (email.dirty || email.touched),
+           'is-invalid': email.invalid && (email.dirty || email.touched)
+           }" />
+    <label for="email" class="sr-only">Email</label>
+  </div>
+
+  <div class="invalid-feedback mb-2" *ngIf="email.invalid && (email.dirty || email.touched) " ng>
+    O email é inválido
+  </div>
+
+  <div class="form-label-group">
+    <input [(ngModel)]="usuario.senha" id="senha" name="senha" class="form-control mb-1" #senha="ngModel" type="password" placeholder="Informe a senha" required [ngClass]="{
+           'is-valid': senha.valid &&(senha.dirty || senha.touched),
+           'is-invalid': senha.invalid &&(senha.dirty || senha.touched)
+           }" />
+    <label for="senha" class="sr-only">Senha</label>
+  </div>
+  <div class="invalid-feedback mb-2" *ngIf="senha.invalid &&(senha.dirty || senha.touched)">
+    A senha é inválida
+  </div>
+  <button class="btn btn-lg btn-primary btn-block mb-3" (click)="entrar((email.valid &&(email.dirty || email.touched)),(senha.valid &&(senha.dirty || senha.touched)))" type="submit">
+  <div class="spinner-border text-success float-left" role="status" *ngIf="spinnerAtivado">
+  <span class="sr-only">Loading...</span>
+</div>Entrar</button>
+
+  <div class="alert alert-danger" role="alert" *ngIf="mensagemErroRequisicao">
+    {{mensagemErroRequisicao}}
+  </div>
+</form>
+

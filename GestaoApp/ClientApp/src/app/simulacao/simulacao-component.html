@@ -1,0 +1,32 @@
+<form class="form-teste">
+  <div class="form-group row">
+    <label for="turmas" class="col-sm-2 col-form-label">Quantidade de turmas</label>
+      <input type="number" class="form-control" name="turmas" [(ngModel)]="turmas" id="turmas" #turmasT="ngModel" required placeholder="Quantidade de turmas" [ngClass]="{
+             'is-valid': !((turmasT.errors?.required || turmasT.invalid || turmasT.value == 0)) && (turmasT.dirty || turmasT.touched),
+             'is-invalid':(turmasT.errors?.required || turmasT.invalid || turmasT.value == 0) && (turmasT.dirty || turmasT.touched) 
+             }">
+
+  </div>
+  <div class="form-group row">
+    <label for="alunos" class="col-sm-2 col-form-label">Quantidade de alunos</label>
+
+      <input type="number" class="form-control" name="alunos" [(ngModel)]="alunos" id="alunos" #alunosT="ngModel" required placeholder="Quantidade de alunos" [ngClass]="{
+             'is-valid': !((alunosT.errors?.required || alunosT.invalid || alunosT.value == 0)) && (alunosT.dirty || alunosT.touched),
+             'is-invalid': (alunosT.errors?.required || alunosT.invalid || alunosT.value == 0) && (alunosT.dirty || alunosT.touched)
+             }">
+
+  </div>
+  <div class="form-group row">
+   
+      <button type="submit" disabled  class="btn btn-lg btn-block text-center botao-mid btn-primary" *ngIf="((turmasT.errors?.required || turmasT.invalid || turmasT.value == 0)) || ((alunosT.errors?.required || alunosT.invalid || alunosT.value == 0))">Simular</button>
+      <button type="submit" (click)="simular()" class="btn btn-lg btn-block botao-mid text-center btn-primary" *ngIf="!((turmasT.errors?.required || turmasT.invalid || turmasT.value == 0)) && (turmasT.dirty || turmasT.touched) && !((alunosT.errors?.required || alunosT.invalid || alunosT.value == 0)) && (alunosT.dirty || alunosT.touched)">
+        <div class="spinner-border  float-left" role="status" *ngIf="carregando">
+          <span class="sr-only">Loading...</span>
+        </div>
+        Simular
+      </button>
+
+  </div>
+</form>
+
+<tabela-expand [dadosTabela]="response"></tabela-expand>

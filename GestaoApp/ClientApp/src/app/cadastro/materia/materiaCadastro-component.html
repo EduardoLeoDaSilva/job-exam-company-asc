@@ -1,0 +1,104 @@
+
+  <form class="text-center border border-light p-5" action="#!">
+
+    <p class="h4 mb-4">Nova matéria</p>
+    <div class="form-row">
+      <div class="col">
+        <input type="text" id="nome" class="form-control mb-4 " name="nome" #nome="ngModel" [(ngModel)]="materia.nome" placeholder="Insira o nome da matéria" required minlength="4" [ngClass]="{
+               'is-valid':(nome.dirty || nome.touched) &&  !(nome.errors?.minlength  || nome.errors?.required && (nome.dirty || nome.touched)),
+               'is-invalid': nome.errors?.minlength && (nome.dirty || nome.touched) || nome.errors?.required && (nome.dirty || nome.touched)
+               }">
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="nome.errors?.minlength && (nome.dirty || nome.touched)">
+          O campo exige no mínimo 4 caractéres
+        </div>
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="nome.errors?.required && (nome.dirty || nome.touched)">
+          O campo é requerido
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <input type="text" readonly="readonly" id="prova1" class="form-control mb-4" value="Prova 1">
+      </div>
+      <div class="col">
+        <input type="number" max="10" id="pesoProva1" name="pesoProva1" class="form-control  mesma-linha" [(ngModel)]="materia.peso1" #pesoProva1="ngModel" placeholder="Insira o peso da Prova 1" required minlength="1" [ngClass]="{
+               'is-valid':  (pesoProva1.dirty || pesoProva1.touched) && !(pesoProva1.errors?.required  || pesoProva1.value == 0),
+               'is-invalid' : pesoProva1.errors?.required &&(pesoProva1.dirty || pesoProva1.touched) || pesoProva1.value == 0
+               }">
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="pesoProva1.value == 0">
+          O valor do peso não pode ser igual a 0
+        </div>
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="pesoProva1.errors?.required &&(pesoProva1.dirty || pesoProva1.touched)">
+          O campo é requerido pelo sistema
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <input type="text" readonly="readonly" id="prova2" class="form-control mb-4" value="Prova 2">
+      </div>
+      <div class="col">
+        <input type="number" max="10" id="pesoProva2" name="pesoProva2" class="form-control  mesma-linha" [(ngModel)]="materia.peso2" #pesoProva2="ngModel" placeholder="Insira o peso da Prova 2" required minlength="1" [ngClass]="{
+               'is-valid':  (pesoProva2.dirty || pesoProva2.touched) &&  !(pesoProva2.errors?.required || pesoProva2.value == 0),
+               'is-invalid': pesoProva2.errors?.required &&(pesoProva2.dirty || pesoProva2.touched) || pesoProva2.value == 0
+               }">
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="pesoProva2.value == 0">
+          O valor do peso não pode ser igual a 0
+        </div>
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="pesoProva2.errors?.required &&(pesoProva2.dirty || pesoProva2.touched)">
+          O campo é requerido pelo sistema
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <input type="text" readonly="readonly" id="prova3" class="form-control mb-4" value="Prova 3" />
+      </div>
+      <div class="col">
+        <input type="number" max="10" id="pesoProva3" name="pesoProva3" class="form-control  mesma-linha" [(ngModel)]="materia.peso3" #pesoProva3="ngModel" placeholder="Insira o peso da Prova 3" required minlength="1" [ngClass]="{
+               'is-valid':(pesoProva3.dirty || pesoProva3.touched) &&  !(pesoProva3.errors?.required  || pesoProva3.value == 0),
+               'is-invalid': pesoProva3.errors?.required &&(pesoProva3.dirty || pesoProva3.touched) || pesoProva3.value == 0
+               }">
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="pesoProva3.value == 0">
+          O valor do peso não pode ser igual a 0
+        </div>
+        <div class="invalid-feedback mostrar-elemento mb-4" *ngIf="pesoProva3.errors?.required &&(pesoProva3.dirty || pesoProva3.touched)">
+          O campo é requerido pelo sistema
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-info btn-block my-4"  type="submit" disabled *ngIf="(nome.errors?.required || nome.errors?.minlength   || pesoProva3.errors?.required  || pesoProva3 == 0|| pesoProva2.errors?.required  || pesoProva2 == 0|| pesoProva1.errors?.required  || pesoProva1 == 0)">Cadastrar
+    </button>
+    <button class="btn btn-info btn-block my-4" (click)="cadastrar()" *ngIf="!(nome.errors?.required || nome.errors?.minlength || pesoProva3.errors?.required || pesoProva3 == 0|| pesoProva2.errors?.required  || pesoProva2 == 0|| pesoProva1.errors?.required || pesoProva1 == 0)" type="submit">Cadastrar
+    </button>
+
+    <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+      {{mensagemSucesso}}
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="mensagemFalha">
+      {{mensagemFalha}}
+    </div>
+  </form>
+
+  <div class="container">
+    <h5 class="text-center">Matérias cadastradas</h5>
+    <table class="table" >
+      <thead>
+        <tr>
+          <th scope="col">Matéria</th>
+          <th scope="col">Peso Prova 1</th>
+          <th scope="col">Peso Prova 2</th>
+          <th scope="col">Peso Prova 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mat of materiasReponse">
+          <td>{{mat.Nome}}</td>
+          <td>{{mat.Peso1}}</td>
+          <td>{{mat.Peso2}}</td>
+          <td>{{mat.Peso3}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
